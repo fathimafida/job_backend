@@ -16,14 +16,13 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
 from django.conf import settings
 from django.conf.urls.static import static
 
-from jobs.views import PostJobDetailView, PostJobListView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("posts/", PostJobListView.as_view()),
-    path("posts/<int:pk>/", PostJobDetailView.as_view()),
+    path("job/", include("jobs.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

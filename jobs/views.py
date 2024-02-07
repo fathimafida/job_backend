@@ -1,21 +1,13 @@
-from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
-
 from jobs.models import PostJob
-from jobs.serializers import PostJobListSerializer
+from jobs.serializers import PostJobSerializer
+from rest_framework import generics
 
-# Create your views here.
+
+class PostJobListAPIView(generics.ListCreateAPIView):
+    queryset = PostJob.objects.all()
+    serializer_class = PostJobSerializer
 
 
-class PostJobListView(APIView):
-    def get(self, request):
-        postList = PostJob.objects.all()
-        postSerializer = PostJobListSerializer(postList, many=True)
-        return Response(postSerializer.data)
-    
-class PostJobDetailView(APIView):
-    def get(self, request,pk):
-        postDetailViewList = PostJob.objects.get(id=pk)
-        postDetailSerializer = PostJobListSerializer(postDetailViewList)
-        return Response(postDetailSerializer.data)
+class PostJobDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PostJob.objects.all()
+    serializer_class = PostJobSerializer
