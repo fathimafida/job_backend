@@ -11,3 +11,4 @@ class PostJobListAPIView(generics.ListCreateAPIView):
 class PostJobDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PostJob.objects.all()
     serializer_class = PostJobSerializer
+    
