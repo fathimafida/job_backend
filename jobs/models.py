@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.contrib.auth.hashers import make_password
+
 
 class PostJob(models.Model):
     title = models.CharField(max_length=255)
@@ -14,3 +16,17 @@ class PostJob(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class CustomUser(models.Model):
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=128)
+    name = models.CharField(max_length=150)
+
+    def save(self, *args, **kwargs):
+        # Hash password before saving
+        self.password = make_password(self.password)
+        super().save(*args, **kwargs)
+
+    def _str_(self):
+        return self.name
